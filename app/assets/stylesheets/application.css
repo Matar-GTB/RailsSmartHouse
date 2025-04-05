@@ -1,10 +1,32 @@
-/*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
- */
+// app/assets/stylesheets/application.scss
+
+// Ajout de styles personnalisés
+.jumbotron-maison {
+  background-color: #6c5ce7; // Violet moderne
+  color: white;
+  padding: 3rem 2rem;
+  border-radius: 1rem;
+}
+
+.btn-maison {
+  background-color: #00cec9;
+  color: white;
+  font-weight: bold;
+  border: none;
+}
+
+.btn-maison:hover {
+  background-color: #00b894;
+}
+
+.section-image {
+  background-color: #f8f9fa;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.section-image img {
+  max-width: 100%;
+  border-radius: 1rem;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
