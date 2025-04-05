@@ -1,0 +1,31 @@
+
+<h2>Gestion des utilisateurs</h2>
+<%= link_to "Nouvel utilisateur", new_admin_user_path, class: "btn btn-success mb-2" %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Rôle</th>
+      <th>Points</th>
+      <th>Inscrit le</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.email %></td>
+        <td><%= user.role %></td>
+        <td><%= user.points %></td>
+        <td><%= l(user.created_at, format: :short) %></td>
+        <td>
+          <%= link_to "Éditer", edit_admin_user_path(user), class: "btn btn-sm btn-outline-primary" %>
+          <% unless user == current_utilisateur %>
+            <%= link_to "Supprimer", admin_user_path(user), method: :delete, data: { confirm: "Supprimer cet utilisateur ?" }, class: "btn btn-sm btn-outline-danger" %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

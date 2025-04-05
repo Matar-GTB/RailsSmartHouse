@@ -1,0 +1,49 @@
+<h1>Tableau de bord Administrateur</h1>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Utilisateurs</h5>
+        <p class="card-text"><strong>Total : </strong><%= @users_count %></p>
+        <p class="card-text">
+          <%= link_to "Gérer les utilisateurs", admin_users_path, class: "btn btn-primary" %>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Objets connectés</h5>
+        <p class="card-text"><strong>Total : </strong><%= @devices_count %></p>
+        <p class="card-text">
+          <strong>Actifs :</strong> <%= @active_devices %> - <strong>Inactifs :</strong> <%= @inactive_devices %>
+        </p>
+        <p class="card-text">
+          <%= link_to "Voir les objets", devices_path, class: "btn btn-primary" %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3>Derniers utilisateurs inscrits</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Rôle</th>
+      <th>Date d'inscription</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @recent_users.each do |user| %>
+      <tr>
+        <td><%= user.email %></td>
+        <td><%= user.role %></td>
+        <td><%= l(user.created_at, format: :short) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
