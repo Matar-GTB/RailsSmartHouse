@@ -1,0 +1,4 @@
+<!-- app/views/devices/edit.html.erb -->
+<h2>Modifier l'objet : <%= @device.name %></h2>
+<%= render 'form' %>
+<%= link_to "Annuler", device_path(@device), class: "btn btn-link" %>

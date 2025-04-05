@@ -1,0 +1,68 @@
+<!-- app/views/devices/index.html.erb -->
+<h1>Objets connectés</h1>
+<p>Vous avez <strong><%= current_utilisateur.points %> points</strong> – Niveau : <strong><%= current_utilisateur.level_name %></strong>.</p>
+
+<div class="mb-3">
+  <%= form_with url: devices_path, method: :get, local: true, class: "form-inline" do %>
+    <div class="form-group mr-2">
+      <%= label_tag :query, "Recherche :" %>
+      <%= text_field_tag :query, params[:query], class: "form-control", placeholder: "Nom ou description" %>
+    </div>
+    <div class="form-group mr-2">
+      <%= label_tag :active, "État :" %>
+      <%= select_tag :active, options_for_select([["Tous", ""], ["Actifs", "true"], ["Inactifs", "false"]], params[:active]), class: "form-control" %>
+    </div>
+    <div class="form-group mr-2">
+      <%= label_tag :category, "Type :" %>
+      <% categories = Device.distinct.pluck(:category) %>
+      <%= select_tag :category, options_for_select(["Tous"] + categories, params[:category]), class: "form-control" %>
+    </div>
+    <%= submit_tag "Filtrer", class: "btn btn-primary" %>
+  <% end %>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Type</th>
+      <th>Emplacement</th>
+      <th>Valeur</th>
+      <th>État</th>
+      <% if current_utilisateur.role != "simple" %>
+        <th>Actions</th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @devices.each do |device| %>
+      <tr>
+        <td><%= link_to device.name, device_path(device) %></td>
+        <td><%= device.category %></td>
+        <td><%= device.location %></td>
+        <td><%= device.value.present? ? device.value : "-" %></td>
+        <td>
+          <% if device.active %>
+            <span class="badge badge-success">Actif</span>
+          <% else %>
+            <span class="badge badge-secondary">Inactif</span>
+          <% end %>
+        </td>
+        <% if current_utilisateur.role != "simple" %>
+          <td>
+            <% if current_utilisateur.role == "complexe" || current_utilisateur.role == "admin" %>
+              <%= link_to "Éditer", edit_device_path(device), class: "btn btn-sm btn-outline-primary" %>
+            <% end %>
+            <% if current_utilisateur.role == "admin" %>
+              <%= link_to "Supprimer", device_path(device), method: :delete, data: { confirm: "Êtes-vous sûr ?" }, class: "btn btn-sm btn-outline-danger" %>
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if current_utilisateur.role == "complexe" || current_utilisateur.role == "admin" %>
+  <%= link_to "Ajouter un objet", new_device_path, class: "btn btn-success" %>
+<% end %>

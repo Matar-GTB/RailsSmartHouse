@@ -1,0 +1,42 @@
+<!-- app/views/devices/show.html.erb -->
+<h2>Détails de l'objet connecté</h2>
+
+<table class="table table-bordered">
+  <tr>
+    <th>Nom</th>
+    <td><%= @device.name %></td>
+  </tr>
+  <tr>
+    <th>Type</th>
+    <td><%= @device.category %></td>
+  </tr>
+  <tr>
+    <th>Emplacement</th>
+    <td><%= @device.location %></td>
+  </tr>
+  <tr>
+    <th>Description</th>
+    <td><%= @device.description %></td>
+  </tr>
+  <tr>
+    <th>Valeur</th>
+    <td><%= @device.value.present? ? @device.value : "N/A" %></td>
+  </tr>
+  <tr>
+    <th>État</th>
+    <td>
+      <% if @device.active %>
+        <span class="badge badge-success">Actif</span>
+      <% else %>
+        <span class="badge badge-secondary">Inactif</span>
+      <% end %>
+    </td>
+  </tr>
+</table>
+
+<div>
+  <% if current_utilisateur.role == "complexe" || current_utilisateur.role == "admin" %>
+    <%= link_to "Modifier", edit_device_path(@device), class: "btn btn-primary" %>
+  <% end %>
+  <%= link_to "Retour à la liste", devices_path, class: "btn btn-light" %>
+</div>
